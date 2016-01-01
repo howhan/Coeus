@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TABLE>
+<Staff>
+<COLUMN name="Employee ID">3422</COLUMN>
+<COLUMN name="Full Name">How Han Pan</COLUMN>
+<COLUMN name="Cost Center">503010</COLUMN>
+<COLUMN name="Email Address">howhan.pan@comptel.com</COLUMN>
+<COLUMN name="Date Join">01.12.2015</COLUMN>
+<COLUMN name="Date Left">30.12.2015</COLUMN>
+</Staff>
+<Staff>
+<COLUMN name="Employee ID">3421</COLUMN>
+<COLUMN name="Full Name">How Han Pan 2</COLUMN>
+<COLUMN name="Cost Center">503010</COLUMN>
+<COLUMN name="Email Address">howhan.pan@comptel.com</COLUMN>
+<COLUMN name="Date Join">03.12.2015</COLUMN>
+<COLUMN name="Date Left">03.12.2015</COLUMN>
+</Staff>
+</TABLE>
