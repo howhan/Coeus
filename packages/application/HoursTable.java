@@ -109,7 +109,7 @@ public class HoursTable extends DataPlug {
 	
 	private Object OnLoadButtonClicked(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Csv csv = new Csv ("normal.csv");
+		Csv csv = new Csv ("conf/normal.csv");
 		ArrayList<String> input = csv.ReadFileToTable(mTable.getColumns());
 		
 		for (int i=0; i<input.size(); i++) {

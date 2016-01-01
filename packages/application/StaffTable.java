@@ -177,7 +177,7 @@ public class StaffTable extends DataPlug {
 
 	private void OnLoadFilterButtonClicked(ActionEvent e) {
 		// TODO Auto-generated method stub
-		Xml xml = new Xml("staffList.xml");
+		Xml xml = new Xml("conf/staffList.xml");
 		try {
 			ArrayList<String> newData = xml.ReadFileToTable(mTable.getColumns());
 			data.clear();
