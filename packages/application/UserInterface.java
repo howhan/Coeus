@@ -25,7 +25,7 @@ public class UserInterface extends Plug {
 	private StaffTable mStaffTable;
 	private HoursTable mHoursTable;
 	private MonthTable mMonthTable;
-	
+
 	
 	/******************************************************************************************
 	 * The main user interface will be a border pane layout with Top Left Center Right Bottom. 
@@ -46,18 +46,18 @@ public class UserInterface extends Plug {
 
 		TabPane tabPane = new TabPane();
 		
-		mStaffTable = new StaffTable();
+		mStaffTable = new StaffTable(this);
 		mStaffTable.Initialize();
 		Tab staffTableTab = new Tab("Staff");
 		staffTableTab.setContent(mStaffTable.GetTableBox());
 		
 		
-		mHoursTable = new HoursTable();
+		mHoursTable = new HoursTable(this);
 		mHoursTable.Initialize();
 		Tab hoursTableTab = new Tab("Hours CC");
 		hoursTableTab.setContent(mHoursTable.getTableBox());
 		
-		mMonthTable = new MonthTable();
+		mMonthTable = new MonthTable(this);
 		mMonthTable.Initialize();
 		Tab monthTableTab = new Tab("Month View");
 		monthTableTab.setContent(mMonthTable.getTableBox());
@@ -113,6 +113,9 @@ public class UserInterface extends Plug {
 	
 	}
 	
+	public StaffTable getStaffTable() { return mStaffTable; }
+	public HoursTable getHoursTable() { return mHoursTable; }
+	public MonthTable getMonthTable() { return mMonthTable; }
 	
 	public int LoadConfiguration () {
 		//TODO: loading the user interface properties from a file.

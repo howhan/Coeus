@@ -60,8 +60,8 @@ public class StaffDatePicker<S, T> extends TableCell<Staff, LocalDate> {
 	    public void updateItem(LocalDate item, boolean empty) {
 	        super.updateItem(item, empty);
 	        
-	        System.out.println("Row number " + this.getTableRow().getIndex() + " " + item + " is Editing " + isEditable() + " empty " + empty 
-	        		+ " tableview edit " + this.getTableView().isEditable());
+	        //System.out.println("Row number " + this.getTableRow().getIndex() + " " + item + " is Editing " + isEditable() + " empty " + empty 
+	        //		+ " tableview edit " + this.getTableView().isEditable());
 	        
 	        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	        if (null == this.datePicker) {

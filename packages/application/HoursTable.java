@@ -1,6 +1,7 @@
 package application;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 import data.HoursCC;
@@ -49,13 +50,16 @@ public class HoursTable extends DataPlug {
 	private VBox mTableBox;
 	private TableView <HoursCC> mTable;
 	private Button mLoadButton;
+	private Button mTestButton;
 	
 	//Utilities
 	
 	//Data
 	private ObservableList<HoursCC> data = FXCollections.observableArrayList();
 	
-	public HoursTable() { }
+	public HoursTable(Plug plug) {
+		super(plug);
+	}
 
 	@Override
 	public boolean Initialize () {
@@ -97,7 +101,11 @@ public class HoursTable extends DataPlug {
 	    HBox buttonsBox = new HBox();
 	    mLoadButton = new Button(LOAD);
 	    mLoadButton.setOnAction(e ->OnLoadButtonClicked(e));
-	    buttonsBox.getChildren().add(mLoadButton);
+	    mTestButton = new Button(EDIT);
+	    mTestButton.setOnAction(e ->OnTestButtonClicked(e));
+	    
+	    
+	    buttonsBox.getChildren().addAll(mLoadButton, mTestButton);
 	    buttonsBox.setAlignment(Pos.BOTTOM_RIGHT);
 	    
 	    
@@ -119,17 +127,49 @@ public class HoursTable extends DataPlug {
 		return null;
 	}
 	
-    
-    public double SumHoursByMonth (String employeeId, String month, String projectGroup, String salesType) {
+	private Object OnTestButtonClicked(ActionEvent e) {
+		double hoursIC = SumHoursByMonth ("3511", Month.MARCH, "IC");
+		double hoursADM = SumHoursByMonth ("3511", Month.MARCH, "ADM");
+		double hoursABS = SumHoursByMonth ("3511", Month.MARCH, "ABS");
+	
+		System.out.println("Total = " + (hoursIC + hoursADM + hoursABS));
+		return null;
+	}
+	
+    public double SumHoursByMonth (String employeeId, Month month, String projectGroup) {
+    	double hours = 0.0;
+    	int match = 0;
     	for (HoursCC row : data) {
     		//find the row matching employee id
-    		if (row.getEmployeeId() == employeeId) {
+    		if (row.getEmployeeId().equals(employeeId)) {
     			// find the month matching row
-    			
+    			if (row.getDateLogged().getMonth() == month) {
+    				// find the matching projectGroup
+    				if (row.getProjectGroup().equals(projectGroup)) {
+    						hours += row.getHours();
+    				}
+    			}
     		}
     	}
+    	return hours;
+    }
+    
+    public double SumHoursByDay (String employeeId, LocalDate date, String projectGroup) {
+    	double hours = 0.0;
     	
-    	return 0;
+    	for (HoursCC row : data) {
+    		if (row.getEmployeeId().equals(employeeId)) {
+    			// find the month matching row
+    			if (row.getDateLogged() == date) {
+    				// find the matching projectGroup
+    				if (row.getProjectGroup().equals(projectGroup)) {
+    						hours += row.getHours();
+    				}
+    				
+    			}
+    		}
+    	}
+    	return hours;
     }
     
    

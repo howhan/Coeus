@@ -53,7 +53,7 @@ public class Xml {
         ArrayList<String> res = new ArrayList<String>();
         for (int temp = 0; temp < nList.getLength(); temp++) {
         	Node nNode = nList.item(temp);
-        	System.out.println("\nCurrent Element :"+ nNode.getNodeName());
+        	//System.out.println("\nCurrent Element :"+ nNode.getNodeName());
         	    
         	Element eElement = (Element) nNode;
         	NodeList colList = eElement.getElementsByTagName("COLUMN");
@@ -69,7 +69,7 @@ public class Xml {
         		}
      							
 			}
-			System.out.println(tString);
+			//System.out.println(tString);
 			res.add(tString);
         }
 		return res;

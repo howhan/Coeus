@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import data.Utilities;
 
 import application.StaffTable;
 
@@ -15,6 +16,7 @@ import application.StaffTable;
 public class Staff {
  	 	public static double version = 1.0;
  	 	public static String defaultJoinDate = "01.01.2015";
+ 	 	public static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         private  SimpleStringProperty employeeId;
         private  SimpleStringProperty fullName;
         private  SimpleStringProperty costCenter;
@@ -37,7 +39,7 @@ public class Staff {
             this.costCenter = new SimpleStringProperty (costCenter);
             this.emailAddress = new SimpleStringProperty (emailAddress);
             if (in == null) {
-            	this.dateJoin = new SimpleObjectProperty<LocalDate> (getLocalDate(defaultJoinDate));
+            	this.dateJoin = new SimpleObjectProperty<LocalDate> (Utilities.Instance().StringToLocalDate(defaultJoinDate, dateFormat));
             }
             else {
             	this.dateJoin = new SimpleObjectProperty<LocalDate> (in);
@@ -50,7 +52,7 @@ public class Staff {
         	//Expecting a string input with 
     		List<String> fields = (List<String>) Arrays.asList(input.toString().split(";"));
     		
-    		this.dateJoin = new SimpleObjectProperty<LocalDate>(getLocalDate(defaultJoinDate));
+    		this.dateJoin = new SimpleObjectProperty<LocalDate>(Utilities.Instance().StringToLocalDate(defaultJoinDate, dateFormat));
     		this.dateLeft = new SimpleObjectProperty<LocalDate>();
     		
     		for (int i=0; i<fields.size(); i++) {
@@ -69,10 +71,10 @@ public class Staff {
     					this.emailAddress= new SimpleStringProperty(field[1]);
     					break;	
     				case StaffTable.DATEJOIN_COL:
-    					setDateJoin ( getLocalDate(field[1]) );
+    					setDateJoin ( Utilities.Instance().StringToLocalDate(field[1], dateFormat));
     					break;
     				case StaffTable.DATELEFT_COL:
-    					setDateLeft ( getLocalDate(field[1]) );
+    					setDateLeft ( Utilities.Instance().StringToLocalDate(field[1], dateFormat));
     					break;	
     				default:
     					break;
@@ -143,20 +145,7 @@ public class Staff {
         public LocalDate getDateLeft() {
         	return dateLeft.get();
         }
-        
-        private String getDateString(LocalDate date) {
-        	if (date == null) {
-        		return null;
-        	}
-        	DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        	String text = date.format(fmt);
-        	return text;
-        }
-        
-        private LocalDate getLocalDate (String date) {
-        	return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        }
-        
+                
         public void setDateLeft(LocalDate out) {
         	dateLeft.set(out);
         }
@@ -167,8 +156,8 @@ public class Staff {
         @Override
         public String toString() {
         	String res = getEmployeeId() + ";" + getFullName() + ";" + getCostCenter() + ";"
-        				+ getEmailAddress() + ";" + getDateString(getDateJoin()) + ";"
-        				+ getDateString(getDateLeft());
+        				+ getEmailAddress() + ";" + Utilities.Instance().LocalDateToString(getDateJoin(), dateFormat) + ";"
+        				+ Utilities.Instance().LocalDateToString(getDateLeft(), dateFormat);
         	
         	return res;
         }

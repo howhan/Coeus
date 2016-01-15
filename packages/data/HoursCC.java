@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class HoursCC {
+	public DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private SimpleStringProperty sendingCostCenter;
 	private ObjectProperty<LocalDate> dateLogged;
 	private ObjectProperty<LocalDate> dateSubmitted;
@@ -78,7 +79,7 @@ public class HoursCC {
 	
 	
     public LocalDate getLocalDate (String date) {
-    	return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    	return LocalDate.parse(date, this.dateFormat);
     }
     
     
@@ -105,6 +106,7 @@ public class HoursCC {
         return employeeId.get();
     }
     public void setEmployeeId (String in) {
+    	System.out.println("in Size = " + in.length());
     	employeeId.set(in);
     }
     public StringProperty employeeIDProperty() {

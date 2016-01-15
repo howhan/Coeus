@@ -70,6 +70,7 @@ public class StaffTable extends DataPlug {
 	private Button mCancelButton;
 	private Label mTableLabel;
 	private Button mLoadFile;
+	private ArrayList<String> mCostCenters;
 	
 	//Utilities
 	
@@ -78,13 +79,15 @@ public class StaffTable extends DataPlug {
 	private ObservableList <TableColumn<Staff,String>> stringColumns = FXCollections.observableArrayList();
 	private ObservableList <TableColumn<Staff,LocalDate>> dateColumns = FXCollections.observableArrayList();
 	
-	public StaffTable() {
+	public StaffTable(Plug plug) {
+		super(plug);
 		mTableBox = new VBox();
 	}
 	
 	@Override
 	public boolean Initialize() {
 		mTable = new TableView<Staff>();
+		mCostCenters = new ArrayList<String>();
 
 		TableColumn<Staff, String> idCol = new TableColumn<Staff,String>(STAFFID_COL);		
 	    TableColumn<Staff, String> nameCol = new TableColumn<Staff, String>(STAFFNAME_COL);
@@ -165,7 +168,9 @@ public class StaffTable extends DataPlug {
 	    mTableBox.setPadding(new Insets(10, 0, 0, 10));
         mTableBox.getChildren().addAll(mTableLabel, mLoadFile, mTable, buttonsBox);
         
-        //mTable.getCol
+        //Populate Table with InitialData
+        LoadTable ("conf/staffList2.xml");
+        
 		return true;
 	}
 	
@@ -174,32 +179,32 @@ public class StaffTable extends DataPlug {
 			StaffDatePicker<Staff,LocalDate> datePick = new StaffDatePicker<Staff,LocalDate>(data);
 			return datePick;
 	}
-
-	private void OnLoadFilterButtonClicked(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Xml xml = new Xml("conf/staffList.xml");
+	
+	public boolean LoadTable (String filename) {
 		try {
+			Xml xml = new Xml (filename);
 			ArrayList<String> newData = xml.ReadFileToTable(mTable.getColumns());
 			data.clear();
 			for (int i=0; i<newData.size(); i++) {
 				Staff staff = new Staff(newData.get(i));
 				data.add(staff);
 			}
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
+			updateCostCenters();
+			return true;
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		return false;
+	}
+
+	private void OnLoadFilterButtonClicked(ActionEvent e) {
+		LoadTable ("conf/staffList.xml");
 	}
 
 	//	//Action Events
 	private void OnStaffCellEdit(Event e) {
-		System.out.println("what is this? " + this.getClass());
+		//System.out.println("what is this? " + this.getClass());
 		CellEditEvent<Staff,String> t = (CellEditEvent<Staff,String>) e;
 		Staff staff = t.getTableView().getItems().get(t.getTablePosition().getRow());
 		String columnName = t.getTablePosition().getTableColumn().getText();
@@ -222,7 +227,23 @@ public class StaffTable extends DataPlug {
 		}
 	}
 
+	public boolean updateCostCenters() {
+		if (mCostCenters == null) {
+			mCostCenters = new ArrayList<String>();
+		}	
+		mCostCenters.clear();
+		for (Staff row : data) {
+			String cc = row.getCostCenter();
+			if (!mCostCenters.contains(cc)) {
+				mCostCenters.add(cc);
+			}
+		}
+		return true;
+	}
 	
+	public ArrayList<String> getCostCenters () {
+		return mCostCenters;
+	}
 	
 	private void OnEditButtonClicked(ActionEvent e) {
 		if (mMultiButton.getText() == EDIT) {
@@ -280,9 +301,7 @@ public class StaffTable extends DataPlug {
 			e.printStackTrace();
 		}
 		
-		//xml.WriteToFile();
-	
-		
+		//xml.WriteToFile();	
 		return false;
 	}
 	
