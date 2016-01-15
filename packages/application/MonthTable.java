@@ -24,6 +24,7 @@ import java.util.Calendar;
 public class MonthTable extends DataPlug {
 	public static final String DAY_COL = "Day";
 	public static final String DATE_COL = "Date";
+	public static final String COSTCENTER_ALL = "<All>";
 	
 	
 	/***********************************************************************************************
@@ -44,6 +45,7 @@ public class MonthTable extends DataPlug {
 	public MonthTable(Plug plug) {
 		super(plug);
 		mTableBox = new VBox();
+		mTable = new TableView<String>();
 	}
 	
 	@Override
@@ -62,26 +64,32 @@ public class MonthTable extends DataPlug {
 		
 		costCenterComboBox = new ComboBox<>();
 		costCenterComboBox.getItems().addAll(StaffTable().getCostCenters());
-		costCenterComboBox.setValue(costCenterComboBox.getItems().get(0));
+		costCenterComboBox.setValue(COSTCENTER_ALL);
 		costCenterComboBox.setOnMouseClicked (e->onCostCenterContextMenuRequest(e));
 		
 		HBox hbox = new HBox();
 		hbox.getChildren().addAll(monthComboBox, costCenterComboBox);
 		
-		mTableBox.getChildren().addAll(hbox);
+		mTableBox.getChildren().addAll(hbox, mTable);
+		
+		//Table Initialization
+		BuildTable(monthComboBox.getValue(),costCenterComboBox.getValue());
+		
+		
 		return false;
 	}
 	
 	private Object onCostCenterContextMenuRequest(MouseEvent e) {
 		// TODO Auto-generated method stub
 		costCenterComboBox.getItems().clear();
+		costCenterComboBox.getItems().add(COSTCENTER_ALL);
 		if (StaffTable() != null) {
 			costCenterComboBox.getItems().addAll(StaffTable().getCostCenters());
 		}
 		return null;
 	}
 
-	public boolean BuildTable() {
+	public boolean BuildTable(String month, String costCenteer) {
 		//default tableview will be all the employees in the StaffTable.
 		ObservableList<Staff> staffList = StaffTable().getData();
 		TableColumn<String, String> dateCol = new TableColumn<String, String>("Date");

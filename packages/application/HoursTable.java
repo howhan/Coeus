@@ -107,25 +107,34 @@ public class HoursTable extends DataPlug {
 	    
 	    buttonsBox.getChildren().addAll(mLoadButton, mTestButton);
 	    buttonsBox.setAlignment(Pos.BOTTOM_RIGHT);
-	    
-	    
+	    	    
 	    mTableBox = new VBox();
 	    mTableBox.getChildren().addAll(mTable, buttonsBox);
+	    
+	    //Initialize table from default file
+	    LoadTable ("conf/normal.csv");
 	    
 		return true;
 	}
 	
-	private Object OnLoadButtonClicked(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Csv csv = new Csv ("conf/normal.csv");
+	public boolean LoadTable (String filename) {
+		Csv csv = new Csv (filename);
 		ArrayList<String> input = csv.ReadFileToTable(mTable.getColumns());
 		
 		for (int i=0; i<input.size(); i++) {
 			HoursCC hours = new HoursCC(input.get(i));
 			data.add(hours);
 		}		
+		return true;
+		
+	}
+	
+	private Object OnLoadButtonClicked(ActionEvent e) {
+		// TODO Auto-generated method stub
+		LoadTable ("conf/normal.csv");
 		return null;
 	}
+
 	
 	private Object OnTestButtonClicked(ActionEvent e) {
 		double hoursIC = SumHoursByMonth ("3511", Month.MARCH, "IC");
