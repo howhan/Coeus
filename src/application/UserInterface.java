@@ -1,5 +1,7 @@
 package application;
 
+import java.io.IOException;
+
 import application.Plug;
 import application.StaffTable;
 import javafx.collections.FXCollections;
@@ -53,7 +55,12 @@ public class UserInterface extends Plug {
 		
 		
 		mHoursTable = new HoursTable(this);
-		mHoursTable.Initialize();
+		try {
+			mHoursTable.Initialize();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Tab hoursTableTab = new Tab("Hours CC");
 		hoursTableTab.setContent(mHoursTable.getTableBox());
 		

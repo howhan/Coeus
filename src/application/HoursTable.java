@@ -1,11 +1,13 @@
 package application;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 
 import data.HoursCC;
 import files.Csv;
+import files.Xsl;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
@@ -62,7 +64,7 @@ public class HoursTable extends DataPlug {
 	}
 
 	@Override
-	public boolean Initialize () {
+	public boolean Initialize () throws IOException {
 		TableColumn<HoursCC, String> sendingcostcentercol = new TableColumn<HoursCC,String>(SENDINGCOSTCENTER_COL);		
 	    TableColumn<HoursCC, String> employeeidcol = new TableColumn<HoursCC, String>(EMPLOYEEID_COL);
 	    TableColumn<HoursCC, String> fullnamecol = new TableColumn<HoursCC, String>(FULLNAME_COL);
@@ -100,7 +102,12 @@ public class HoursTable extends DataPlug {
 
 	    HBox buttonsBox = new HBox();
 	    mLoadButton = new Button(LOAD);
-	    mLoadButton.setOnAction(e ->OnLoadButtonClicked(e));
+	    try {
+			mLoadButton.setOnAction(e->OnLoadButtonClicked(e));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	    mTestButton = new Button(EDIT);
 	    mTestButton.setOnAction(e ->OnTestButtonClicked(e));
 	    
@@ -112,15 +119,38 @@ public class HoursTable extends DataPlug {
 	    mTableBox.getChildren().addAll(mTable, buttonsBox);
 	    
 	    //Initialize table from default file
-	    LoadTable ("conf/normal.csv");
+	    LoadTable ("conf/hours.xlsx");
 	    
 		return true;
 	}
 	
-	public boolean LoadTable (String filename) {
-		Csv csv = new Csv (filename);
-		ArrayList<String> input = csv.ReadFileToTable(mTable.getColumns());
+	public boolean LoadTable (String filename) throws IOException {
+		Xsl excel = new Xsl (filename);
 		
+		//NEED TO FIX THIS
+		ArrayList<String> cols = new ArrayList<String>();
+		cols.add(SENDINGCOSTCENTER_COL);
+		cols.add(DATELOGGED_COL);
+		cols.add(DATESUBMITTED_COL);
+		cols.add(EMPLOYEEID_COL);
+		cols.add(FULLNAME_COL);
+		cols.add(SUBPROJECTID_COL);
+		cols.add(SUBPROJECTNAME_COL);
+		cols.add(PROJECTGROUP_COL);
+		cols.add(SALESTYPE_COL);
+		cols.add(RECEIVINGCOSTCENTER_COL);
+		cols.add(HOURS_COL);
+		
+		
+		if (!excel.VerifyTableHeader(1, cols)) {
+			System.out.print("This is bad!");
+		}
+				
+		ArrayList<String> input = excel.ReadFileToTable(mTable.getColumns());
+		if (input == null) {
+			return false;
+		}
+				
 		for (int i=0; i<input.size(); i++) {
 			HoursCC hours = new HoursCC(input.get(i));
 			data.add(hours);
@@ -129,9 +159,14 @@ public class HoursTable extends DataPlug {
 		
 	}
 	
-	private Object OnLoadButtonClicked(ActionEvent e) {
+	private Object OnLoadButtonClicked(ActionEvent e)  {
 		// TODO Auto-generated method stub
-		LoadTable ("conf/normal.csv");
+		try {
+			LoadTable ("conf/hours.xlsx");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		return null;
 	}
 
@@ -162,7 +197,7 @@ public class HoursTable extends DataPlug {
     	}
     	return hours;
     }
-    
+       
     public double SumHoursByDay (String employeeId, LocalDate date, String projectGroup) {
     	double hours = 0.0;
     	
