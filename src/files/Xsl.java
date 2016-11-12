@@ -69,17 +69,20 @@ public class Xsl {
 		
 		//Get the first row of the first sheet
 		XSSFSheet sheet = workbook.getSheetAt(0);
-        while(sheet.getRow(rowCount)!=null) {
+		int lastRow = sheet.getLastRowNum() - 1;
+        while(rowCount <= lastRow) {
         	String tString = ""; 
 			XSSFRow row = sheet.getRow(rowCount++);
 			for (int cellCount=0; cellCount<tableColumns.size(); cellCount++) {
-//				tableColumns.get(x).getText()
 				XSSFCell cell = row.getCell(cellCount);
 				String value = df.formatCellValue(cell);
+				if (value == null) {
+					System.out.println("Yo!");
+				}
 				tString += tableColumns.get(cellCount).getText() + ":" + value + ";";
 			}
+			System.out.println(tString);
 		    res.add(tString);   
-			rowCount++;
 		}
 		return res;
 	}

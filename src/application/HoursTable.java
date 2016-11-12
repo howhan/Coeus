@@ -65,6 +65,9 @@ public class HoursTable extends DataPlug {
 
 	@Override
 	public boolean Initialize () throws IOException {
+		System.out.println(this.getClass().toString());
+		
+		
 		TableColumn<HoursCC, String> sendingcostcentercol = new TableColumn<HoursCC,String>(SENDINGCOSTCENTER_COL);		
 	    TableColumn<HoursCC, String> employeeidcol = new TableColumn<HoursCC, String>(EMPLOYEEID_COL);
 	    TableColumn<HoursCC, String> fullnamecol = new TableColumn<HoursCC, String>(FULLNAME_COL);
@@ -73,10 +76,8 @@ public class HoursTable extends DataPlug {
 	    TableColumn<HoursCC, String> projectgroupcol = new TableColumn<HoursCC, String>(PROJECTGROUP_COL);
 	    TableColumn<HoursCC, String> salestypecol = new TableColumn<HoursCC, String>(SALESTYPE_COL);
 	    TableColumn<HoursCC, String> receivingcostcentercol = new TableColumn<HoursCC, String>(RECEIVINGCOSTCENTER_COL);
-	    
 	    TableColumn<HoursCC, LocalDate> dateloggedcol = new TableColumn<HoursCC, LocalDate>(DATELOGGED_COL);
 	    TableColumn<HoursCC, LocalDate> datesubmittedcol = new TableColumn<HoursCC, LocalDate>(DATESUBMITTED_COL);
-	    
 	    TableColumn<HoursCC, Double> hourscol = new TableColumn<HoursCC, Double>(HOURS_COL);
 	    
 	    
@@ -119,11 +120,11 @@ public class HoursTable extends DataPlug {
 	    mTableBox.getChildren().addAll(mTable, buttonsBox);
 	    
 	    //Initialize table from default file
-	    LoadTable ("conf/hours.xlsx");
+	    //LoadTable ("conf/hours.xlsx");
 	    
 		return true;
 	}
-	
+		
 	public boolean LoadTable (String filename) throws IOException {
 		Xsl excel = new Xsl (filename);
 		

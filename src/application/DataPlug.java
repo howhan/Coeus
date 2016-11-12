@@ -5,6 +5,7 @@ import java.io.IOException;
 public class DataPlug {
 
 	private Plug mContainer;
+	
 	public DataPlug(Plug plug) {mContainer = plug;}
 	
 	public boolean Initialize () throws IOException {
@@ -12,4 +13,10 @@ public class DataPlug {
 	}
 	
 	public Plug getContainer () { return mContainer; }
+	
+	public boolean InitializeConfiguration() {
+		
+		return false;
+		
+	}
 }
