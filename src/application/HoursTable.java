@@ -120,7 +120,7 @@ public class HoursTable extends DataPlug {
 	    mTableBox.getChildren().addAll(mTable, buttonsBox);
 	    
 	    //Initialize table from default file
-	    //LoadTable ("conf/hours.xlsx");
+	    LoadTable ("conf/hours.xlsx");
 	    
 		return true;
 	}
