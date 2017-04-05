@@ -77,12 +77,11 @@ public class HoursCC {
 		}
     }
 	
-	
+
     public LocalDate getLocalDate (String date) {
     	return LocalDate.parse(date, this.dateFormat);
     }
-    
-    
+      
 	public Double getHours() {
 		return hours.get();
 	}

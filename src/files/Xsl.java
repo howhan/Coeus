@@ -60,7 +60,7 @@ public class Xsl {
 		return true;
 	}
 	
-	public <T> ArrayList<String> ReadFileToTable (ObservableList<TableColumn<T,?>> tableColumns) throws IOException {
+	public <T> ArrayList<String> ReadFileToTable (ArrayList<String> columns) throws IOException {
 		workbook = getWorkbook();		
         ArrayList<String> res = new ArrayList<String>();
         
@@ -73,13 +73,13 @@ public class Xsl {
         while(rowCount <= lastRow) {
         	String tString = ""; 
 			XSSFRow row = sheet.getRow(rowCount++);
-			for (int cellCount=0; cellCount<tableColumns.size(); cellCount++) {
+			for (int cellCount=0; cellCount<columns.size(); cellCount++) {
 				XSSFCell cell = row.getCell(cellCount);
 				String value = df.formatCellValue(cell);
 				if (value == null) {
 					System.out.println("Yo!");
 				}
-				tString += tableColumns.get(cellCount).getText() + ":" + value + ";";
+				tString += columns.get(cellCount) + ":" + value + ";";
 			}
 			System.out.println(tString);
 		    res.add(tString);   

@@ -6,6 +6,7 @@ import java.time.Month;
 import java.util.ArrayList;
 
 import data.HoursCC;
+import statistics.HoursManager;
 import files.Csv;
 import files.Xsl;
 import javafx.beans.property.DoubleProperty;
@@ -57,6 +58,7 @@ public class HoursTable extends DataPlug {
 	//Utilities
 	
 	//Data
+	private HoursManager mHoursManager = new HoursManager(); 
 	private ObservableList<HoursCC> data = FXCollections.observableArrayList();
 	
 	public HoursTable(Plug plug) {
@@ -66,8 +68,7 @@ public class HoursTable extends DataPlug {
 	@Override
 	public boolean Initialize () throws IOException {
 		System.out.println(this.getClass().toString());
-		
-		
+			
 		TableColumn<HoursCC, String> sendingcostcentercol = new TableColumn<HoursCC,String>(SENDINGCOSTCENTER_COL);		
 	    TableColumn<HoursCC, String> employeeidcol = new TableColumn<HoursCC, String>(EMPLOYEEID_COL);
 	    TableColumn<HoursCC, String> fullnamecol = new TableColumn<HoursCC, String>(FULLNAME_COL);
@@ -126,36 +127,8 @@ public class HoursTable extends DataPlug {
 	}
 		
 	public boolean LoadTable (String filename) throws IOException {
-		Xsl excel = new Xsl (filename);
-		
-		//NEED TO FIX THIS
-		ArrayList<String> cols = new ArrayList<String>();
-		cols.add(SENDINGCOSTCENTER_COL);
-		cols.add(DATELOGGED_COL);
-		cols.add(DATESUBMITTED_COL);
-		cols.add(EMPLOYEEID_COL);
-		cols.add(FULLNAME_COL);
-		cols.add(SUBPROJECTID_COL);
-		cols.add(SUBPROJECTNAME_COL);
-		cols.add(PROJECTGROUP_COL);
-		cols.add(SALESTYPE_COL);
-		cols.add(RECEIVINGCOSTCENTER_COL);
-		cols.add(HOURS_COL);
-		
-		
-		if (!excel.VerifyTableHeader(1, cols)) {
-			System.out.print("This is bad!");
-		}
-				
-		ArrayList<String> input = excel.ReadFileToTable(mTable.getColumns());
-		if (input == null) {
-			return false;
-		}
-				
-		for (int i=0; i<input.size(); i++) {
-			HoursCC hours = new HoursCC(input.get(i));
-			data.add(hours);
-		}		
+		ObservableList<HoursCC> thisdata = mHoursManager.LoadFile(filename,this.GetColumns());
+		mTable.setItems(thisdata);
 		return true;
 		
 	}
@@ -217,9 +190,30 @@ public class HoursTable extends DataPlug {
     	return hours;
     }
     
-   
+    public ArrayList<String> GetColumns () {
+    	
+		//NEED TO FIX THIS
+		ArrayList<String> cols = new ArrayList<String>();
+		cols.add(SENDINGCOSTCENTER_COL);
+		cols.add(DATELOGGED_COL);
+		cols.add(DATESUBMITTED_COL);
+		cols.add(EMPLOYEEID_COL);
+		cols.add(FULLNAME_COL);
+		cols.add(SUBPROJECTID_COL);
+		cols.add(SUBPROJECTNAME_COL);
+		cols.add(PROJECTGROUP_COL);
+		cols.add(SALESTYPE_COL);
+		cols.add(RECEIVINGCOSTCENTER_COL);
+		cols.add(HOURS_COL);
+		
+		return cols;
+    }
 
 	public VBox getTableBox() {
 		return mTableBox;
+	}
+	
+	public HoursManager getHoursManager() {
+		return mHoursManager;
 	}
 }
