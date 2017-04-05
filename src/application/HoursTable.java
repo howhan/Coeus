@@ -122,6 +122,9 @@ public class HoursTable extends DataPlug {
 	    
 	    //Initialize table from default file
 	    LoadTable ("conf/hours.xlsx");
+	    double myHours = mHoursManager.QueryTotalHours("3511", 0, 0);
+	    
+	    System.out.println("My Hours = " + myHours);
 	    
 		return true;
 	}
@@ -146,49 +149,16 @@ public class HoursTable extends DataPlug {
 
 	
 	private Object OnTestButtonClicked(ActionEvent e) {
-		double hoursIC = SumHoursByMonth ("3511", Month.MARCH, "IC");
-		double hoursADM = SumHoursByMonth ("3511", Month.MARCH, "ADM");
-		double hoursABS = SumHoursByMonth ("3511", Month.MARCH, "ABS");
+		
+		double hoursIC = mHoursManager.SumHoursByMonth ("3511", Month.MARCH, "IC");
+		double hoursADM = mHoursManager.SumHoursByMonth ("3511", Month.MARCH, "ADM");
+		double hoursABS = mHoursManager.SumHoursByMonth ("3511", Month.MARCH, "ABS");
 	
 		System.out.println("Total = " + (hoursIC + hoursADM + hoursABS));
 		return null;
 	}
 	
-    public double SumHoursByMonth (String employeeId, Month month, String projectGroup) {
-    	double hours = 0.0;
-    	int match = 0;
-    	for (HoursCC row : data) {
-    		//find the row matching employee id
-    		if (row.getEmployeeId().equals(employeeId)) {
-    			// find the month matching row
-    			if (row.getDateLogged().getMonth() == month) {
-    				// find the matching projectGroup
-    				if (row.getProjectGroup().equals(projectGroup)) {
-    						hours += row.getHours();
-    				}
-    			}
-    		}
-    	}
-    	return hours;
-    }
-       
-    public double SumHoursByDay (String employeeId, LocalDate date, String projectGroup) {
-    	double hours = 0.0;
-    	
-    	for (HoursCC row : data) {
-    		if (row.getEmployeeId().equals(employeeId)) {
-    			// find the month matching row
-    			if (row.getDateLogged() == date) {
-    				// find the matching projectGroup
-    				if (row.getProjectGroup().equals(projectGroup)) {
-    						hours += row.getHours();
-    				}
-    				
-    			}
-    		}
-    	}
-    	return hours;
-    }
+  
     
     public ArrayList<String> GetColumns () {
     	
