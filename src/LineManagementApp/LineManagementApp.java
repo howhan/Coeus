@@ -13,12 +13,15 @@ import java.io.File;
 import application.LoginForm;
 import application.Plug;
 import application.UserInterface;
+import application.SystemMan;
+
 public class LineManagementApp extends Application {
 	
     @Override
     public void start (Stage primaryStage) {
     	Plug.SetStage(primaryStage);
-    	
+    	Plug.SetSystemMan(new SystemMan());
+    
     	//create login form and initialize to configuration File
     	LoginForm loginForm = new LoginForm();
     	loginForm.Initialize();

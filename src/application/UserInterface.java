@@ -73,7 +73,7 @@ public class UserInterface extends Plug {
 		
 		tabPane.getTabs().addAll(staffTableTab, hoursTableTab, monthTableTab);
 		
-		
+		System.out.println("Free CPU " + GetSystemMan().getFreeCPU());
 		
 		
 
