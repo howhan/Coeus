@@ -13,7 +13,7 @@ import java.io.File;
 import application.LoginForm;
 import application.Tableau;
 import application.UserInterface;
-import application.SystemMan;
+import engines.SystemMan;
 
 public class LineManagementApp extends Application {
 	
