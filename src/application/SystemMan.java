@@ -3,7 +3,7 @@ package application;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 
-public class SystemMan extends Plug {
+public class SystemMan extends Tableau {
 	OperatingSystemMXBean mOperatingSystemMXBean;
 	
 	public SystemMan() {

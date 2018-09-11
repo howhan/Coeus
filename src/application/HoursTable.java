@@ -24,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class HoursTable extends DataPlug {
+public class HoursTable extends DataScape {
 	private static final String LOAD = "LOAD";
 	private static final String SAVE = "SAVE";
 	private static final String EDIT = "EDIT";
@@ -61,7 +61,7 @@ public class HoursTable extends DataPlug {
 	private HoursManager mHoursManager = new HoursManager(); 
 	private ObservableList<HoursCC> data = FXCollections.observableArrayList();
 	
-	public HoursTable(Plug plug) {
+	public HoursTable(Tableau plug) {
 		super(plug);
 	}
 

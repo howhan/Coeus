@@ -2,7 +2,7 @@ package application;
 
 import java.io.IOException;
 
-import application.Plug;
+import application.Tableau;
 import application.StaffTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class UserInterface extends Plug {
+public class UserInterface extends Tableau {
 	private StaffTable mStaffTable;
 	private HoursTable mHoursTable;
 	private MonthTable mMonthTable;

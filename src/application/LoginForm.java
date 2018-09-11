@@ -20,9 +20,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-import application.Plug;
+import application.Tableau;
 
-public class LoginForm extends Plug{
+public class LoginForm extends Tableau{
 	private GridPane mGrid;
 	private Text mLoginMessage;
 	private HBox mSignInButton;
@@ -33,7 +33,7 @@ public class LoginForm extends Plug{
 	
 	public void LoginButtonClicked (ActionEvent e) {
 		//TODO: Verify login credentials
-		Plug.GetStage().setScene (mNextScene);
+		Tableau.GetStage().setScene (mNextScene);
 	}
 	
 	@Override

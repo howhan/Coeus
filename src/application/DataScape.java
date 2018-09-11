@@ -2,17 +2,17 @@ package application;
 
 import java.io.IOException;
 
-public class DataPlug {
+public class DataScape {
 
-	private Plug mContainer;
+	private Tableau mContainer;
 	
-	public DataPlug(Plug plug) {mContainer = plug;}
+	public DataScape(Tableau tableau) {mContainer = tableau;}
 	
 	public boolean Initialize () throws IOException {
 		return false;
 	}
 	
-	public Plug getContainer () { return mContainer; }
+	public Tableau getContainer () { return mContainer; }
 	
 	public boolean InitializeConfiguration() {
 		

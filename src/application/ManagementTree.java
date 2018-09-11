@@ -1,9 +1,9 @@
 package application;
 
-import application.Plug;
+import application.Tableau;
 import javafx.scene.control.TreeView;
 
-public class ManagementTree extends Plug{
+public class ManagementTree extends Tableau{
 	private TreeView mTreeView;
 
 	public ManagementTree() {

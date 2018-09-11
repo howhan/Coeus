@@ -38,12 +38,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
-import application.DataPlug;
+import application.DataScape;
 import data.Staff;
 import files.Xml;
 
 
-public class StaffTable extends DataPlug {
+public class StaffTable extends DataScape {
 	private static final String LOADFILTER = "LOAD FILTER";
 	private static final String SAVE = "SAVE";
 	private static final String EDIT = "EDIT";
@@ -79,7 +79,7 @@ public class StaffTable extends DataPlug {
 	private ObservableList <TableColumn<Staff,String>> stringColumns = FXCollections.observableArrayList();
 	private ObservableList <TableColumn<Staff,LocalDate>> dateColumns = FXCollections.observableArrayList();
 	
-	public StaffTable(Plug plug) {
+	public StaffTable(Tableau plug) {
 		super(plug);
 		mTableBox = new VBox();
 	}

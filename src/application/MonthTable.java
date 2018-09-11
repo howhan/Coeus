@@ -26,7 +26,7 @@ import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-public class MonthTable extends DataPlug {
+public class MonthTable extends DataScape {
 	public static final String DAY_COL = "Day";
 	public static final String DATE_COL = "Date";
 	public static final String COSTCENTER_ALL = "<All>";
@@ -48,7 +48,7 @@ public class MonthTable extends DataPlug {
 
 	
 	//Constructor
-	public MonthTable(Plug plug) {
+	public MonthTable(Tableau plug) {
 		super(plug);
 		mTableBox = new VBox();
 		mTable = new TableView<String>();
