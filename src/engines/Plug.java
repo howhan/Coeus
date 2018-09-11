@@ -3,7 +3,7 @@ package engines;
 // Base class for all engine classes
 // All engines are by default running on their own thread.
 // 
-public class Man {
+public class Plug {
 	private static final int OK = 0;
 	private String mName;
 	private String mMessage;

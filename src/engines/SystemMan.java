@@ -1,7 +1,9 @@
-package application;
+package engines;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
+
+import application.Tableau;
 
 public class SystemMan extends Tableau {
 	OperatingSystemMXBean mOperatingSystemMXBean;

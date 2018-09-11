@@ -1,8 +1,8 @@
 package application;
 
+import engines.SystemMan;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import application.SystemMan;
 
 /* This class is the base Scene class for this application.
  * All forms of Scenes in the User
