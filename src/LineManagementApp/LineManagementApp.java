@@ -20,8 +20,12 @@ public class LineManagementApp extends Application {
     @Override
     public void start (Stage primaryStage) {
     	Tableau.SetStage(primaryStage);
-    	Tableau.SetSystemMan(new SystemMan());
-    
+    	    
+    	//Initialize System Management module and link it to the tableau.
+    	SystemMan systemMan = new SystemMan();
+    	Tableau.SetSystemMan(systemMan);
+        	
+    	
     	//create login form and initialize to configuration File
     	LoginForm loginForm = new LoginForm();
     	loginForm.Initialize();
